@@ -11,7 +11,7 @@ export const Routes: Pages[] = [
   {
     component: <Home />,
     path: "/",
-    isAuthenticated: false,
+    isAuthenticated: true,
   },
   {
     component: <Login />,
@@ -31,7 +31,7 @@ export const Routes: Pages[] = [
   {
     component: <Viewproduct />,
     path: "/product/:id",
-    isAuthenticated: false,
+    isAuthenticated: true,
   },
   {
     component: <NotFoundPage />,

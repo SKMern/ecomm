@@ -44,6 +44,8 @@ export interface LoginState {
 export interface RegisterState extends LoginState {
   [key: string]: any;
   email: string;
+  name: string;
+  popup?: boolean;
 }
 
 export interface RegisterInput {

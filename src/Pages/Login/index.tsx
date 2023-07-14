@@ -14,8 +14,9 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { userLogin } from "../../Redux/Actions/AuthActions";
 import { useAppDispatch, useAppSelector } from "../../Components/Hooks";
 import { useNavigate } from "react-router";
+import { validate } from "../../Components/Helper";
 
-const errorDesign = { color: "red", fontSize: "12px" };
+export const errorDesign = { color: "red", fontSize: "12px" };
 
 const Login = () => {
   const dispactch = useAppDispatch();
@@ -63,14 +64,6 @@ const Login = () => {
     error.password = !user.password ? "password cannot be empty" : "";
     error.loginStatus = "";
     setError(error);
-  };
-
-  const validate = (data: any, error: any) => {
-    let valid: boolean = true;
-    Object.values(data).forEach((it) => !it && (valid = false));
-    Object.values(error).forEach((it) => it && (valid = false));
-
-    return valid;
   };
 
   const handleSubmit = async () => {

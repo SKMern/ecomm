@@ -29,10 +29,10 @@ const Header = () => {
       }}
     >
       <Grid container justifyContent="space-between">
-        <Grid item md={6} sx={{ margin: "auto" }}>
-          <Link href="/" underline="none">
-            eComm{" "}
-          </Link>
+        <Grid item md={6}>
+          <p style={{ cursor: "pointer" }} onClick={() => routeTo("/")}>
+            eComm
+          </p>
         </Grid>
         <Grid item md={6}>
           <Grid container justifyContent="flex-end">

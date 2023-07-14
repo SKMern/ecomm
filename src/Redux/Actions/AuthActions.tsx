@@ -4,6 +4,7 @@ import {
   USER_LOGIN_FAILED,
   USER_LOGOUT,
   USER_REGISTER,
+  USER_REGISTRATION_SUCCESS,
 } from "../ActionTypes";
 import { Dispatch } from "redux";
 import { loginRoute, registerRoute } from "../../Api/ApiRoutes";
@@ -15,7 +16,7 @@ export const userRegister = (userData: any) => async (dispatch: Dispatch) => {
     .then(({ data }) => {
       dispatch({
         type: USER_REGISTER,
-        payload: "User registration successfull",
+        payload: USER_REGISTRATION_SUCCESS,
       });
     })
     .catch((error) =>
