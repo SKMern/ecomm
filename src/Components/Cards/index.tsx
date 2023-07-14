@@ -13,7 +13,12 @@ const ImageCard = ({
   rating,
 }: ProductsData) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+      }}
+    >
       <CardMedia sx={{ height: 140 }} image={image} title={title} />
       <CardContent sx={{ height: 100 }}>
         <Typography gutterBottom variant="h5" component="div">
@@ -22,7 +27,7 @@ const ImageCard = ({
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
-        <Typography>{price}</Typography>
+        <Typography>Rs. {price}</Typography>
       </CardContent>
     </Card>
   );

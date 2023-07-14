@@ -3,11 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import { Routes as Pages } from "../src/Routes";
 import PrivateRoute from "./Components/PrivateRoute";
-import { useAppSelector } from "./Components/Hooks";
 
 function App() {
-  const isLoggedIn = useAppSelector((state) => state.Authentication.isLoggedIn);
-  console.log("app", isLoggedIn, localStorage.getItem("accessToken"));
+  const isLoggedIn = localStorage.getItem("accessToken") !== null;
+  //console.log("app", isLoggedIn, localStorage.getItem("accessToken"));
   return (
     <BrowserRouter>
       <Header />
@@ -19,11 +18,7 @@ function App() {
               key={i}
               element={
                 it.isAuthenticated ? (
-                  <PrivateRoute
-                    path={it.path}
-                    component={it.component}
-                    isAuthenticated={isLoggedIn}
-                  />
+                  <PrivateRoute>{it.component}</PrivateRoute>
                 ) : (
                   it.component
                 )

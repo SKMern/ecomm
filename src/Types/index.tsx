@@ -1,5 +1,3 @@
-import { JsxElement } from "typescript";
-
 export type Pages = {
   component: React.JSX.Element;
   path: string;
