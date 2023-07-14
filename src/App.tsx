@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import { Routes as Pages } from "../src/Routes";
 import PrivateRoute from "./Components/PrivateRoute";
+import { useAppSelector } from "./Components/Hooks";
 
 function App() {
-  const isLoggedIn = localStorage.getItem("accessToken") !== null;
+  const isLoggedIn = useAppSelector((state) => state.Authentication.isLoggedIn);
   console.log("app", isLoggedIn, localStorage.getItem("accessToken"));
   return (
     <BrowserRouter>

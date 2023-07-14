@@ -8,8 +8,20 @@ export type Pages = {
 
 export interface AuthenticateState {
   isLoggedIn: boolean;
-  accessToken: string;
+  _id: string;
+  address: string;
+  country: string;
+  eMail: string;
+  name: string;
+  password: string;
+  pincode: number;
   refreshToken: string;
+  secAnswer: string;
+  secQuestion: string;
+  state: string;
+  token: string;
+  userName: string;
+  message: string;
 }
 
 export interface Action {
@@ -25,6 +37,8 @@ export interface LoginState {
   userName: string;
   password: string;
   showpassword?: boolean;
+  loader?: boolean;
+  loginStatus?: "";
 }
 
 export interface RegisterState extends LoginState {

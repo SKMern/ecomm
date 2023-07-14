@@ -8,11 +8,14 @@ import {
   Link,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoginState } from "../../Types";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { userLogin } from "../../Redux/Actions/AuthActions";
-import { useAppDispatch } from "../../Components/Hooks";
+import { useAppDispatch, useAppSelector } from "../../Components/Hooks";
+import { useNavigate } from "react-router";
+
+const errorDesign = { color: "red", fontSize: "12px" };
 
 const Login = () => {
   const dispactch = useAppDispatch();
@@ -20,15 +23,26 @@ const Login = () => {
     userName: "",
     password: "",
     showpassword: false,
+    loader: false,
   });
   const [error, setError] = useState<LoginState>({
     userName: "",
     password: "",
+    loginStatus: "",
   });
+
+  const loginMessage = useAppSelector((state) => state.Authentication.message);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loginMessage) {
+      setError({ ...error, loginStatus: loginMessage });
+      setUser({ ...user, loader: false });
+    }
+  }, [loginMessage]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log("e.target", value, name);
     setUser({
       ...user,
       [name]: value,
@@ -36,6 +50,7 @@ const Login = () => {
     setError({
       ...error,
       [name]: "",
+      loginStatus: "",
     });
   };
 
@@ -43,8 +58,33 @@ const Login = () => {
     setUser({ ...user, showpassword: !user.showpassword });
   };
 
-  const handleSubmit = () => {
-    dispactch(userLogin(user));
+  const errorValidate = () => {
+    error.userName = !user.userName ? "Username cannot be empty" : "";
+    error.password = !user.password ? "password cannot be empty" : "";
+    error.loginStatus = "";
+    setError(error);
+  };
+
+  const validate = (data: any, error: any) => {
+    let valid: boolean = true;
+    Object.values(data).forEach((it) => !it && (valid = false));
+    Object.values(error).forEach((it) => it && (valid = false));
+
+    return valid;
+  };
+
+  const handleSubmit = async () => {
+    const { userName, password } = user;
+    setUser({ ...user, loader: true });
+    errorValidate();
+    const data = { userName, password },
+      errorData = { userError: error.userName, passwordError: error.password };
+    if (validate(data, errorData)) {
+      const { userName, password } = user;
+      const id = await dispactch(userLogin({ userName, password }));
+      console.log("id", id);
+      if (id) navigate(`/profile/${id}`);
+    }
   };
 
   return (
@@ -60,31 +100,41 @@ const Login = () => {
         }}
       >
         <Grid container>
-          <Grid item md={12}>
+          <Grid
+            item
+            md={12}
+            sx={{
+              marginBottom: "20px",
+            }}
+          >
             <TextField
               name="userName"
               value={user.userName}
+              error={error.userName ? true : false}
+              helperText={error.userName}
               onChange={onChange}
               label="Enter Username"
               variant="outlined"
               fullWidth
-              sx={{
-                marginBottom: "20px",
-              }}
             />
           </Grid>
-          <Grid item md={12}>
+          <Grid
+            item
+            md={12}
+            sx={{
+              marginBottom: "20px",
+            }}
+          >
             <TextField
               name="password"
               type={user.showpassword ? "text" : "password"}
               value={user.password}
+              error={error.password ? true : false}
+              helperText={error.password}
               onChange={onChange}
               label="Enter Password"
               variant="outlined"
               fullWidth
-              sx={{
-                marginBottom: "20px",
-              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -100,11 +150,15 @@ const Login = () => {
             />
           </Grid>
         </Grid>
+        {error.loginStatus && (
+          <span style={errorDesign}>{error.loginStatus}</span>
+        )}
         <Button
           fullWidth
           variant="contained"
           sx={{ marginBottom: "20px" }}
           onClick={handleSubmit}
+          disabled={user.loader}
         >
           Login
         </Button>

@@ -11,13 +11,13 @@ const Header = () => {
   const isLoggedIn = useAppSelector(
     (state: ReduxState) => state.Authentication.isLoggedIn
   );
-  console.log("isLoggedIn", isLoggedIn);
 
   const routeTo = (route: string) => {
     history(route);
   };
   const logout = () => {
     dispatch(userLogout());
+    history("/login");
   };
   return (
     <Container
