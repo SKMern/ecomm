@@ -19,7 +19,11 @@ const ImageCard = ({
         boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
       }}
     >
-      <CardMedia sx={{ height: 140 }} image={image} title={title} />
+      <CardMedia
+        sx={{ height: 140, width: "100%", minWidth: "350px" }}
+        image={image}
+        title={title}
+      />
       <CardContent sx={{ height: 100 }}>
         <Typography gutterBottom variant="h5" component="div">
           {title}

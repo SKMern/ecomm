@@ -12,7 +12,7 @@ export const Routes: Pages[] = [
   {
     component: <Home />,
     path: "/",
-    isAuthenticated: true,
+    isAuthenticated: false,
   },
   {
     component: <Login />,
@@ -32,7 +32,7 @@ export const Routes: Pages[] = [
   {
     component: <Viewproduct />,
     path: "/product/:id",
-    isAuthenticated: true,
+    isAuthenticated: false,
   },
   {
     component: <AddProduct />,

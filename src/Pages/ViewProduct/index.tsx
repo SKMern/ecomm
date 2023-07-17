@@ -33,10 +33,13 @@ const Viewproduct = () => {
             src={image}
             alt={title}
             width="100%"
+            height="500px"
             style={{
               boxShadow:
                 "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
               borderRadius: "10px",
+              objectFit: "cover",
+              minHeight: "180px",
             }}
           />
         </Grid>
