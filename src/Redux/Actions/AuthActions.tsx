@@ -1,5 +1,6 @@
 // import api from "../../Api";
 import {
+  RESET_STATE,
   USER_LOGIN,
   USER_LOGIN_FAILED,
   USER_LOGOUT,
@@ -46,6 +47,15 @@ export const userLogout = () => async (dispatch: Dispatch) => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     dispatch({ type: USER_LOGOUT });
+  } catch (err) {
+    // Dispatch an error action with the error message
+    console.log("err", err);
+  }
+};
+
+export const loginReset = () => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: RESET_STATE });
   } catch (err) {
     // Dispatch an error action with the error message
     console.log("err", err);

@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { LoginState } from "../../Types";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { userLogin } from "../../Redux/Actions/AuthActions";
+import { loginReset, userLogin } from "../../Redux/Actions/AuthActions";
 import { useAppDispatch, useAppSelector } from "../../Components/Hooks";
 import { useNavigate } from "react-router";
 import { validate } from "../../Components/Helper";
@@ -47,6 +47,7 @@ const Login = () => {
     setUser({
       ...user,
       [name]: value,
+      loader: false,
     });
     setError({
       ...error,
@@ -69,6 +70,7 @@ const Login = () => {
   const handleSubmit = async () => {
     const { userName, password } = user;
     setUser({ ...user, loader: true });
+    dispactch(loginReset());
     errorValidate();
     const data = { userName, password },
       errorData = { userError: error.userName, passwordError: error.password };

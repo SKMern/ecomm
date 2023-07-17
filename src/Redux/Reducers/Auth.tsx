@@ -1,5 +1,6 @@
 import { Action, AuthenticateState } from "../../Types";
 import {
+  RESET_STATE,
   USER_LOGIN,
   USER_LOGIN_FAILED,
   USER_LOGOUT,
@@ -52,6 +53,12 @@ const Authentication = (
       return {
         ...initialState,
       };
+    case RESET_STATE:
+      return {
+        ...state,
+        message: "",
+      };
+
     default:
       return state;
   }
