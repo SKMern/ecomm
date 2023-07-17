@@ -1,4 +1,5 @@
 import axios from "axios";
+import { refreshRoute } from "./ApiRoutes";
 
 const getLocalAccessToken = () => {
   const accessToken = window.localStorage.getItem("accessToken");
@@ -27,6 +28,33 @@ api.interceptors.request.use((config) => {
   }
 });
 
-api.interceptors.response.use((res) => {});
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Check if the request received a 401 Unauthorized response
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const response = await api.post(refreshRoute(), {
+          refreshToken: getLocalRefreshToken(),
+        });
+
+        const newAccessToken = response.data;
+
+        originalRequest.headers["x-access-token"] = newAccessToken;
+        localStorage.setItem("accessToken", newAccessToken);
+
+        return api(originalRequest);
+      } catch (refreshError) {
+        console.log("refreshError", refreshError);
+      }
+    }
+
+    throw error;
+  }
+);
 
 export default api;

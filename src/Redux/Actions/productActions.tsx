@@ -16,6 +16,9 @@ import {
   updateProductRoute,
 } from "../../Api/ApiRoutes";
 
+const accessToken = window.localStorage.getItem("accessToken");
+axios.defaults.headers.common["x-access-token"] = accessToken;
+
 export const getAllProducts = () => async (dispatch: Dispatch) => {
   await axios
     .get(getAllProductRoute())

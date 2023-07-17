@@ -106,7 +106,8 @@ const AddProduct = () => {
     error.description = !product.description
       ? "Description cannot be empty"
       : "";
-    error.price = product.price === 0 ? "Set the price" : "";
+    error.price = !product.price || +product.price <= 0 ? "Set the price" : "";
+    console.log("product.price", product.price);
     setError(error);
   };
 
@@ -134,6 +135,7 @@ const AddProduct = () => {
       } else dispatch(addProduct({ id, ...data, ...restData }));
     }
   };
+  console.log("errors", error);
 
   return (
     <Container sx={{ minHeight: "100vh" }}>
