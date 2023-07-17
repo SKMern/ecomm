@@ -112,10 +112,10 @@ const Register = () => {
   };
 
   const errorValidation = () => {
-    error.name = !user.name ? "name cannot be empty" : "";
+    error.name = !user.name ? "Name cannot be empty" : "";
     error.userName = !user.userName ? "Username cannot be empty" : "";
-    error.email = !user.email ? "email cannot be empty" : "";
-    error.password = !user.password ? "password cannot be empty" : "";
+    error.email = !user.email ? "Email cannot be empty" : "";
+    error.password = !user.password ? "Password cannot be empty" : "";
     error.loginStatus = "";
     setError(error);
   };
@@ -138,7 +138,7 @@ const Register = () => {
   };
 
   return (
-    <Container sx={{ minHeight: "100vh" }}>
+    <Container>
       <Box
         component="div"
         sx={{
@@ -147,6 +147,7 @@ const Register = () => {
           borderRadius: "5px",
           maxWidth: "450px",
           margin: "30px auto",
+          background: "white",
         }}
       >
         <Grid container>

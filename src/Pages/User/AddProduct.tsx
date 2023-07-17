@@ -138,7 +138,7 @@ const AddProduct = () => {
   console.log("errors", error);
 
   return (
-    <Container sx={{ minHeight: "100vh" }}>
+    <Container>
       <Box
         component="div"
         sx={{
@@ -147,6 +147,7 @@ const AddProduct = () => {
           borderRadius: "5px",
           maxWidth: "450px",
           margin: "30px auto",
+          background: "white",
         }}
       >
         <Grid container>

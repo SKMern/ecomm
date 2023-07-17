@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <Container maxWidth="xl">
       <h1 style={{ textAlign: "center" }}>All products</h1>
-      <Grid container spacing={4} sx={{ marginBottom: "50px" }}>
+      <Grid container spacing={4}>
         {products.map((it, i) => {
           if (it.category === "bags")
             return (

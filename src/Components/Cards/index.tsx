@@ -17,6 +17,7 @@ const ImageCard = ({
       sx={{
         maxWidth: 345,
         boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+        cursor: "pointer",
       }}
     >
       <CardMedia

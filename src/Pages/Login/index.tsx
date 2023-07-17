@@ -83,7 +83,7 @@ const Login = () => {
   };
 
   return (
-    <Container sx={{ minHeight: "100vh" }}>
+    <Container>
       <Box
         component="div"
         sx={{
@@ -92,6 +92,7 @@ const Login = () => {
           borderRadius: "5px",
           maxWidth: "450px",
           margin: "30px auto",
+          background: "white",
         }}
       >
         <Grid container>

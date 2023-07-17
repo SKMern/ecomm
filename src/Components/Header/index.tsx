@@ -29,6 +29,7 @@ const Header = () => {
         height: 70,
         padding: "20px !important",
         boxShadow: "0 5px 6px -6px #777",
+        background: "white",
       }}
     >
       <Grid container justifyContent="space-between">
