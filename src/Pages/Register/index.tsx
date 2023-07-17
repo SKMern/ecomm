@@ -178,7 +178,6 @@ const Register = () => {
           variant="contained"
           sx={{ marginBottom: "20px" }}
           onClick={handleSubmit}
-          disabled={user.loader}
         >
           Register
         </Button>
