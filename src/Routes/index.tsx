@@ -6,6 +6,7 @@ import { Pages } from "../Types";
 import Dashboard from "../Pages/User/Dashboard";
 import Viewproduct from "../Pages/ViewProduct";
 import NotFoundPage from "../Pages/404";
+import AddProduct from "../Pages/User/AddProduct";
 
 export const Routes: Pages[] = [
   {
@@ -31,6 +32,16 @@ export const Routes: Pages[] = [
   {
     component: <Viewproduct />,
     path: "/product/:id",
+    isAuthenticated: true,
+  },
+  {
+    component: <AddProduct />,
+    path: "/edit/:id",
+    isAuthenticated: true,
+  },
+  {
+    component: <AddProduct />,
+    path: "/add",
     isAuthenticated: true,
   },
   {

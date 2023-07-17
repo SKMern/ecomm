@@ -11,3 +11,13 @@ export const validate = (data: any, error: any) => {
 export const useAuth = () => {
   return useAppSelector((state) => state.Authentication.isLoggedIn);
 };
+
+export const productSchema = {
+  category: "",
+  description: "",
+  id: 0,
+  image: "",
+  price: 0,
+  rating: { rate: 0, count: 0 },
+  title: "",
+};

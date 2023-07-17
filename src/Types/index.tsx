@@ -56,7 +56,7 @@ export interface ProductsData {
   description: string;
   id: number;
   image: string;
-  price: number;
+  price: number | string;
   rating: { rate: number; count: number };
   title: string;
 }
@@ -64,4 +64,12 @@ export interface ProductsData {
 export type ProductsState = {
   status: boolean;
   products: ProductsData[];
+  addMessage: string;
 };
+
+export interface AddProductState extends ProductsData {
+  [key: string]: any;
+  loader?: boolean;
+  loginStatus?: "";
+  popup?: boolean;
+}

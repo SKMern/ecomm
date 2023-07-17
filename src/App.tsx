@@ -5,8 +5,6 @@ import { Routes as Pages } from "../src/Routes";
 import PrivateRoute from "./Components/PrivateRoute";
 
 function App() {
-  const isLoggedIn = localStorage.getItem("accessToken") !== null;
-  //console.log("app", isLoggedIn, localStorage.getItem("accessToken"));
   return (
     <BrowserRouter>
       <Header />

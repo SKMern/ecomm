@@ -4,16 +4,7 @@ import { useAppSelector } from "../../Components/Hooks";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { ProductsData } from "../../Types";
 import Loader from "../../Components/Loader";
-
-const initial = {
-  category: "",
-  description: "",
-  id: 0,
-  image: "",
-  price: 0,
-  rating: { rate: 0, count: 0 },
-  title: "",
-};
+import { productSchema } from "../../Components/Helper";
 
 const Viewproduct = () => {
   const location = useLocation();
@@ -23,7 +14,7 @@ const Viewproduct = () => {
   );
   const [loader, setLoader] = useState<boolean>(false);
   const [product] = useState<ProductsData>(
-    currentProduct ? currentProduct : initial
+    currentProduct ? currentProduct : productSchema
   );
 
   useEffect(() => {

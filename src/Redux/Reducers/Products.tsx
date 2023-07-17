@@ -1,9 +1,16 @@
 import { Action, ProductsState } from "../../Types";
-import { GET_ALL_PRODUCTS } from "../ActionTypes";
+import {
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  GET_ALL_PRODUCTS,
+  RESET_STATE,
+  UPDATE_PRODUCT,
+} from "../ActionTypes";
 
 const initialState: ProductsState = {
   status: false,
   products: [],
+  addMessage: "",
 };
 
 const Products = (state: ProductsState = initialState, action: Action) => {
@@ -16,7 +23,26 @@ const Products = (state: ProductsState = initialState, action: Action) => {
         status: true,
         products: [...payload],
       };
-
+    case ADD_PRODUCT:
+      return {
+        ...state,
+        addMessage: payload,
+      };
+    case UPDATE_PRODUCT:
+      return {
+        ...state,
+        addMessage: payload,
+      };
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        addMessage: payload,
+      };
+    case RESET_STATE:
+      return {
+        ...state,
+        addMessage: "",
+      };
     default:
       return state;
   }

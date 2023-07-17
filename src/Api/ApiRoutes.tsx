@@ -9,3 +9,13 @@ export const registerRoute = () => {
 export const getAllProductRoute = () => {
   return `${API_URL}api/getAll`;
 };
+
+export const addProductRoute = () => {
+  return `${API_URL}api/post`;
+};
+export const updateProductRoute = (id: string) => {
+  return `${API_URL}api/update/${id}`;
+};
+export const deleteProductRoute = (id: string) => {
+  return `${API_URL}api/delete/${id}`;
+};
