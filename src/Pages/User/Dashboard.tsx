@@ -38,16 +38,18 @@ const Dashboard = () => {
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
-    setLoader(true);
-    if (Products) {
+    if (Products.length === 0) {
+      dispatch(getAllProducts());
+    }
+    if (Products && Products.length > 0 && loader) {
       setLoader(false);
     }
-    dispatch(getAllProducts());
+
     if (status === PRODUCT_DELETE_SUCCESS) {
       setPopup(true);
       setLoader(false);
     }
-  }, [status]);
+  }, [status, Products]);
   const { userName } = userDetails;
 
   const onDelete = (id: string) => {

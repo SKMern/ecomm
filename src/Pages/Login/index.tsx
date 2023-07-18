@@ -78,7 +78,7 @@ const Login = () => {
     if (validate(data, errorData)) {
       const { userName, password } = user;
       const id = await dispactch(userLogin({ userName, password }));
-      if (id) navigate(`/profile/${id}`);
+      if (id) navigate(`/`);
     }
   };
 

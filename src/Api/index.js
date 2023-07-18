@@ -1,7 +1,7 @@
 import axios from "axios";
 import { refreshRoute } from "./ApiRoutes";
 
-const getLocalAccessToken = () => {
+export const getLocalAccessToken = () => {
   const accessToken = window.localStorage.getItem("accessToken");
   return accessToken;
 };
@@ -26,15 +26,16 @@ api.interceptors.request.use((config) => {
       config.headers["x-access-token"] = token;
     }
   }
+
+  return config;
 });
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => { return response},
   async (error) => {
     const originalRequest = error.config;
-
     // Check if the request received a 401 Unauthorized response
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
@@ -42,8 +43,7 @@ api.interceptors.response.use(
           refreshToken: getLocalRefreshToken(),
         });
 
-        const newAccessToken = response.data;
-
+        const newAccessToken = response.data.data;
         originalRequest.headers["x-access-token"] = newAccessToken;
         localStorage.setItem("accessToken", newAccessToken);
 

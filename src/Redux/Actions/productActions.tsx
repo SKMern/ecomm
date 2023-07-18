@@ -8,19 +8,16 @@ import {
   RESET_STATE,
   UPDATE_PRODUCT,
 } from "../ActionTypes";
-import axios from "axios";
 import {
   addProductRoute,
   deleteProductRoute,
   getAllProductRoute,
   updateProductRoute,
 } from "../../Api/ApiRoutes";
-
-const accessToken = window.localStorage.getItem("accessToken");
-axios.defaults.headers.common["x-access-token"] = accessToken;
+import api from "../../Api";
 
 export const getAllProducts = () => async (dispatch: Dispatch) => {
-  await axios
+  await api
     .get(getAllProductRoute())
     .then((res) => {
       dispatch({ type: GET_ALL_PRODUCTS, payload: res.data });
@@ -29,7 +26,7 @@ export const getAllProducts = () => async (dispatch: Dispatch) => {
 };
 
 export const addProduct = (data: any) => async (dispatch: Dispatch) => {
-  await axios
+  await api
     .post(addProductRoute(), data)
     .then(({ data }) => {
       dispatch({
@@ -41,7 +38,8 @@ export const addProduct = (data: any) => async (dispatch: Dispatch) => {
 };
 
 export const updateProduct = (data: any) => async (dispatch: Dispatch) => {
-  await axios
+  console.log("data",data)
+  await api
     .patch(updateProductRoute(data._id), data)
     .then(({ data }) => {
       dispatch({
@@ -49,11 +47,11 @@ export const updateProduct = (data: any) => async (dispatch: Dispatch) => {
         payload: ADD_PRODUCT_SUCCESS,
       });
     })
-    .catch((error) => console.log("product add err", error));
+    .catch((error) => console.log("product add 1err", error));
 };
 
 export const deleteProduct = (id: string) => async (dispatch: Dispatch) => {
-  await axios
+  await api
     .delete(deleteProductRoute(id))
     .then(({ data }) => {
       dispatch({

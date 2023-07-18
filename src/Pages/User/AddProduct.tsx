@@ -68,7 +68,7 @@ const AddProduct = () => {
   const status = useAppSelector((state) => state.Products.addMessage);
   const userId = useAppSelector((state) => state.Authentication._id);
   const allProduct = useAppSelector((state) => state.Products.products);
-  const id = allProduct[allProduct.length - 1].id + 1;
+  const id = (allProduct && allProduct.length > 0) ? allProduct[allProduct.length - 1].id + 1 : 0;
 
   useEffect(() => {
     if (status) {
@@ -83,6 +83,7 @@ const AddProduct = () => {
     }
     return () => {
       setProduct(productSchema);
+      dispatch(reset())
     };
   }, [status, editId]);
 

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { RegisterInput, RegisterState } from "../../Types";
-import { userRegister } from "../../Redux/Actions/AuthActions";
+import { loginReset, userRegister } from "../../Redux/Actions/AuthActions";
 import { useAppDispatch, useAppSelector } from "../../Components/Hooks";
 import { validate } from "../../Components/Helper";
 import { errorDesign } from "../Login";
@@ -96,6 +96,7 @@ const Register = () => {
     if (loginMessage === USER_REGISTRATION_SUCCESS) {
       setUser({ ...user, popup: true });
     }
+    return () => {dispactch(loginReset());}
   }, [loginMessage]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

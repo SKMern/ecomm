@@ -26,7 +26,7 @@ export const Routes: Pages[] = [
   },
   {
     component: <Dashboard />,
-    path: "/profile/:id",
+    path: "/profile",
     isAuthenticated: true,
   },
   {

@@ -1,19 +1,15 @@
-import React from "react";
-import { Button, Container, Grid, Link, Typography } from "@mui/material";
-import { ReduxState } from "../../Types";
+import React, { useEffect } from "react";
+import { Button, Container, Grid } from "@mui/material";
 import { userLogout } from "../../Redux/Actions/AuthActions";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../Hooks";
+import { useAppDispatch } from "../Hooks";
+import { getLocalAccessToken } from "../../Api";
+import { getAllProducts } from "../../Redux/Actions/productActions";
 
 const Header = () => {
   let history = useNavigate();
   const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector(
-    (state: ReduxState) => state.Authentication.isLoggedIn
-  );
-  const userId = useAppSelector(
-    (state: ReduxState) => state.Authentication._id
-  );
+  const isLoggedIn = getLocalAccessToken();
 
   const routeTo = (route: string) => {
     history(route);
@@ -34,15 +30,15 @@ const Header = () => {
     >
       <Grid container justifyContent="space-between">
         <Grid item md={6}>
-          <p style={{ cursor: "pointer" }} onClick={() => routeTo("/")}>
+          <Button sx={{color: '#000', textTransform: 'none'}} onClick={() => routeTo("/")}>
             eComm
-          </p>
+          </Button>
         </Grid>
         <Grid item md={6}>
           <Grid container justifyContent="flex-end">
             {isLoggedIn ? (
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button onClick={() => routeTo(`/profile/${userId}`)}>
+                <Button onClick={() => routeTo(`/profile`)}>
                   Dashboard
                 </Button>
                 <Button onClick={() => routeTo("/add")}>Add Product</Button>

@@ -1,9 +1,9 @@
 import React from "react";
 import { Navigate } from "react-router";
-import { useAuth } from "../Helper";
+import { getLocalAccessToken } from "../../Api";
 
 const PrivateRoute = ({ children }: any) => {
-  const auth = useAuth();
+  const auth = getLocalAccessToken();
   return auth ? children : <Navigate to="/login" />;
 };
 

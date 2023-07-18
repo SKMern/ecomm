@@ -9,10 +9,10 @@ import {
 } from "../ActionTypes";
 import { Dispatch } from "redux";
 import { loginRoute, registerRoute } from "../../Api/ApiRoutes";
-import axios from "axios";
+import api from "../../Api";
 
 export const userRegister = (userData: any) => async (dispatch: Dispatch) => {
-  await axios
+  await api
     .post(registerRoute(), userData)
     .then(({ data }) => {
       dispatch({
@@ -27,7 +27,7 @@ export const userRegister = (userData: any) => async (dispatch: Dispatch) => {
 
 export const userLogin = (userData: any) => async (dispatch: Dispatch) => {
   let status;
-  await axios
+  await api
     .post(loginRoute(), userData)
     .then(({ data }) => {
       const accessTkn = data.data.token;
@@ -42,6 +42,7 @@ export const userLogin = (userData: any) => async (dispatch: Dispatch) => {
     );
   return status;
 };
+
 export const userLogout = () => async (dispatch: Dispatch) => {
   try {
     localStorage.removeItem("accessToken");
