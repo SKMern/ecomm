@@ -43,7 +43,7 @@ export const addProduct = (data: any) => async (dispatch: Dispatch) => {
 
 export const updateProduct = (data: any) => async (dispatch: Dispatch) => {
   await axios
-    .post(updateProductRoute(data._id), data)
+    .patch(updateProductRoute(data._id), data)
     .then(({ data }) => {
       dispatch({
         type: UPDATE_PRODUCT,
