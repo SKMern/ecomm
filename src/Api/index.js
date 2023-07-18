@@ -32,9 +32,9 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
+    console.log('apiError-', error)
     // Check if the request received a 401 Unauthorized response
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {

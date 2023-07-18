@@ -71,6 +71,7 @@ const Login = () => {
     const { userName, password } = user;
     setUser({ ...user, loader: true });
     dispactch(loginReset());
+    localStorage.clear();
     errorValidate();
     const data = { userName, password },
       errorData = { userError: error.userName, passwordError: error.password };
