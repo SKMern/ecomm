@@ -49,7 +49,7 @@ export const userLogout = () => async (dispatch: Dispatch) => {
     dispatch({ type: USER_LOGOUT });
   } catch (err) {
     // Dispatch an error action with the error message
-    console.log("err", err);
+    console.log("logout err", err);
   }
 };
 
@@ -58,6 +58,6 @@ export const loginReset = () => async (dispatch: Dispatch) => {
     dispatch({ type: RESET_STATE });
   } catch (err) {
     // Dispatch an error action with the error message
-    console.log("err", err);
+    console.log("login reset err", err);
   }
 };

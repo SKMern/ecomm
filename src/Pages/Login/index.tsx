@@ -78,7 +78,6 @@ const Login = () => {
     if (validate(data, errorData)) {
       const { userName, password } = user;
       const id = await dispactch(userLogin({ userName, password }));
-      console.log("id", id);
       if (id) navigate(`/profile/${id}`);
     }
   };

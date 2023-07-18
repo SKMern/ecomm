@@ -25,11 +25,10 @@ export const getAllProducts = () => async (dispatch: Dispatch) => {
     .then((res) => {
       dispatch({ type: GET_ALL_PRODUCTS, payload: res.data });
     })
-    .catch((error) => console.log("product err", error));
+    .catch((error) => console.log("get product err", error));
 };
 
 export const addProduct = (data: any) => async (dispatch: Dispatch) => {
-  console.log("data", data);
   await axios
     .post(addProductRoute(), data)
     .then(({ data }) => {
@@ -50,7 +49,7 @@ export const updateProduct = (data: any) => async (dispatch: Dispatch) => {
         payload: ADD_PRODUCT_SUCCESS,
       });
     })
-    .catch((error) => console.log("product add err", error));
+    .catch((error) => console.log("product update err", error));
 };
 
 export const deleteProduct = (id: string) => async (dispatch: Dispatch) => {
@@ -62,7 +61,7 @@ export const deleteProduct = (id: string) => async (dispatch: Dispatch) => {
         payload: PRODUCT_DELETE_SUCCESS,
       });
     })
-    .catch((error) => console.log("product add err", error));
+    .catch((error) => console.log("product delete err", error));
 };
 
 export const reset = () => async (dispatch: Dispatch) => {

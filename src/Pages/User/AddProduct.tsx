@@ -79,7 +79,6 @@ const AddProduct = () => {
       setProduct({ ...product, popup: true });
     }
     if (editId) {
-      console.log("selectedProduct", selectedProduct);
       setProduct(selectedProduct);
     }
     return () => {
@@ -107,7 +106,6 @@ const AddProduct = () => {
       ? "Description cannot be empty"
       : "";
     error.price = !product.price || +product.price <= 0 ? "Set the price" : "";
-    console.log("product.price", product.price);
     setError(error);
   };
 
@@ -135,7 +133,6 @@ const AddProduct = () => {
       } else dispatch(addProduct({ id, ...data, ...restData }));
     }
   };
-  console.log("errors", error);
 
   return (
     <Container>

@@ -133,7 +133,6 @@ const Register = () => {
       };
     if (validate(data, errorData)) {
       const status = await dispactch(userRegister({ ...data, ...restData }));
-      console.log("status", status);
     }
   };
 
