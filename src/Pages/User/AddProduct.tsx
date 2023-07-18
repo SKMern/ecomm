@@ -77,10 +77,10 @@ const AddProduct = () => {
       setError({ ...error, loginStatus: status });
       setProduct({ ...product, loader: false });
     }
-    if (status === ADD_PRODUCT_SUCCESS) {console.log('first')
-      setProduct({ ...product, popup: true });
+    if (status === ADD_PRODUCT_SUCCESS) {
+      setProduct({ ...product, popup: true, loader: false });
     }
-    if (editId && !product.id) {console.log('asdaddad')
+    if (editId && !product.id) {
       setProduct({...product, ...selectedProduct});
     }
     if(editId && !selectedProduct){
@@ -116,7 +116,6 @@ const AddProduct = () => {
 
   const handleSubmit = async () => {
     const { title, image, price, description } = product;
-    setProduct({ ...product, loader: true });
     errorValidation();
     const data = { title, image, price, description },
       errorData = {
@@ -126,6 +125,7 @@ const AddProduct = () => {
         description: error.description,
       };
     if (validate(data, errorData)) {
+      setProduct({ ...product, loader: true });
       if (editId) {
         dispatch(
           updateProduct({
@@ -182,9 +182,9 @@ const AddProduct = () => {
           variant="contained"
           sx={{ marginBottom: "20px" }}
           onClick={handleSubmit}
-          // disabled={product.loader}
+          disabled={product.loader}
         >
-          Submit
+          {editId ? "Update" : "Submit"}
         </Button>
       </Box>
       <Dialog open={product.popup ? product.popup : false}>
