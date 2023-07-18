@@ -34,6 +34,10 @@ const RegisterInputs: RegisterInput[] = [
     name: "password",
     label: "Enter Password",
   },
+  {
+    name: "confirmPassword",
+    label: "Confirm Password",
+  },
   // {
   //   name: "Address",
   //   label: "Enter your address",
@@ -74,6 +78,7 @@ const Register = () => {
   const [user, setUser] = useState<RegisterState>({
     userName: "",
     password: "",
+    confirmPassword: "",
     email: "",
     name: "",
     loader: false,
@@ -82,6 +87,7 @@ const Register = () => {
   const [error, setError] = useState<RegisterState>({
     userName: "",
     password: "",
+    confirmPassword: "",
     email: "",
     name: "",
     loginStatus: "",
@@ -96,7 +102,9 @@ const Register = () => {
     if (loginMessage === USER_REGISTRATION_SUCCESS) {
       setUser({ ...user, popup: true });
     }
-    return () => {dispactch(loginReset());}
+    return () => {
+      dispactch(loginReset());
+    };
   }, [loginMessage]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,28 +120,60 @@ const Register = () => {
     });
   };
 
+  //valid email returns true
+  const isValidEmail = (email: string) => {
+    const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return regex.test(email);
+  };
+
+  //valid password return true
+  const isValidPassword = (email: string) => {
+    const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    console.log('regex.test(pwd)', regex.test(email))
+    return regex.test(email);
+  };
+  
   const errorValidation = () => {
-    error.name = !user.name ? "Name cannot be empty" : "";
-    error.userName = !user.userName ? "Username cannot be empty" : "";
-    error.email = !user.email ? "Email cannot be empty" : "";
-    error.password = !user.password ? "Password cannot be empty" : "";
+    error.name = !user.name
+      ? "Name cannot be empty"
+      : user.name.length < 3
+      ? "Enter min 3 char"
+      : "";
+    error.userName = !user.userName
+      ? "Username cannot be empty"
+      : user.userName.length < 3
+      ? "Enter min 3 char"
+      : "";
+    error.email = !user.email
+      ? "Email cannot be empty"
+      : !isValidEmail(user.email)
+      ? "Enter valid email"
+      : "";
+    error.password = !user.password ? "Password cannot be empty" : !isValidPassword(user.password) ? "Password must contain min 8 char include upper lower digits spl chars" : "";
+    error.confirmPassword = !user.confirmPassword
+      ? "Enter confirm password"
+      : user.password !== user.confirmPassword
+      ? "Password doesn't match"
+      : "";
     error.loginStatus = "";
     setError(error);
   };
 
   const handleSubmit = async () => {
-    const { email, name, password, userName } = user;
+    const { email, name, password, userName, confirmPassword } = user;
     setUser({ ...user, loader: true });
     errorValidation();
-    const data = { email, name, password, userName },
+    const data = { email, name, password, userName, confirmPassword },
       errorData = {
         email: error.email,
         name: error.name,
         password: error.password,
         userName: error.userName,
+        confirmPassword: error.confirmPassword,
       };
     if (validate(data, errorData)) {
-      const status = await dispactch(userRegister({ ...data, ...restData }));
+      delete data["confirmPassword"];
+      await dispactch(userRegister({ ...data, ...restData }));
     }
   };
 
@@ -156,6 +196,7 @@ const Register = () => {
               <Grid item md={12} key={i}>
                 <TextField
                   name={it.name}
+                  type={it.name === "password" ? "password" : "text"}
                   value={user[it.name]}
                   error={error[it.name] ? true : false}
                   helperText={error[it.name]}

@@ -44,6 +44,7 @@ export interface RegisterState extends LoginState {
   email: string;
   name: string;
   popup?: boolean;
+  confirmPassword?: string
 }
 
 export interface RegisterInput {

@@ -66,23 +66,27 @@ const AddProduct = () => {
     price: "",
   });
   const status = useAppSelector((state) => state.Products.addMessage);
-  const userId = useAppSelector((state) => state.Authentication._id);
   const allProduct = useAppSelector((state) => state.Products.products);
   const id = (allProduct && allProduct.length > 0) ? allProduct[allProduct.length - 1].id + 1 : 0;
 
   useEffect(() => {
+    if(!editId){
+      setProduct(productSchema);
+    }
     if (status) {
       setError({ ...error, loginStatus: status });
       setProduct({ ...product, loader: false });
     }
-    if (status === ADD_PRODUCT_SUCCESS) {
+    if (status === ADD_PRODUCT_SUCCESS) {console.log('first')
       setProduct({ ...product, popup: true });
     }
-    if (editId) {
-      setProduct(selectedProduct);
+    if (editId && !product.id) {console.log('asdaddad')
+      setProduct({...product, ...selectedProduct});
+    }
+    if(editId && !selectedProduct){
+      navigate('/profile')
     }
     return () => {
-      setProduct(productSchema);
       dispatch(reset())
     };
   }, [status, editId]);
@@ -192,7 +196,7 @@ const AddProduct = () => {
             variant="outlined"
             onClick={() => {
               dispatch(reset());
-              navigate(`/profile/${userId}`);
+              navigate(`/profile`);
             }}
           >
             Ok

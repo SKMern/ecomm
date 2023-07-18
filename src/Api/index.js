@@ -22,7 +22,7 @@ api.interceptors.request.use((config) => {
   if (config) {
     const token = getLocalAccessToken();
     if (token) {
-      console.log("token", token);
+      // console.log("token", token);
       config.headers["x-access-token"] = token;
     }
   }
