@@ -29,7 +29,7 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) => {response; console.log('response', response)},
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
