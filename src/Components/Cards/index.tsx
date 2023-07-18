@@ -21,7 +21,7 @@ const ImageCard = ({
       }}
     >
       <CardMedia
-        sx={{ height: 140, width: "100%", minWidth: "350px" }}
+        sx={{ height: 140,  }}
         image={image}
         title={title}
       />

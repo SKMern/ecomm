@@ -22,7 +22,7 @@ const Home = () => {
         {products.map((it, i) => {
           if (it.category === "bags")
             return (
-              <Grid item sm={6} md={4} lg={3} key={i}>
+              <Grid item sm={6} md={4} lg={2.4} key={i}>
                 <div onClick={() => navigate(`product/${it.id}`)}>
                   <ImageCard {...it} />
                 </div>
