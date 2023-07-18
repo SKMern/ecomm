@@ -8,29 +8,28 @@ import {
   RESET_STATE,
   UPDATE_PRODUCT,
 } from "../ActionTypes";
-// import axios from "axios";
+import axios from "axios";
 import {
   addProductRoute,
   deleteProductRoute,
   getAllProductRoute,
   updateProductRoute,
 } from "../../Api/ApiRoutes";
-import api from '../../Api'
 
 const accessToken = window.localStorage.getItem("accessToken");
-api.defaults.headers.common["x-access-token"] = accessToken;
+axios.defaults.headers.common["x-access-token"] = accessToken;
 
 export const getAllProducts = () => async (dispatch: Dispatch) => {
-  await api
+  await axios
     .get(getAllProductRoute())
     .then((res) => {
       dispatch({ type: GET_ALL_PRODUCTS, payload: res.data });
     })
-    .catch((error) => console.log("get product err", error));
+    .catch((error) => console.log("product err", error));
 };
 
 export const addProduct = (data: any) => async (dispatch: Dispatch) => {
-  await api
+  await axios
     .post(addProductRoute(), data)
     .then(({ data }) => {
       dispatch({
@@ -42,7 +41,7 @@ export const addProduct = (data: any) => async (dispatch: Dispatch) => {
 };
 
 export const updateProduct = (data: any) => async (dispatch: Dispatch) => {
-  await api
+  await axios
     .patch(updateProductRoute(data._id), data)
     .then(({ data }) => {
       dispatch({
@@ -50,11 +49,11 @@ export const updateProduct = (data: any) => async (dispatch: Dispatch) => {
         payload: ADD_PRODUCT_SUCCESS,
       });
     })
-    .catch((error) => console.log("product update err", error));
+    .catch((error) => console.log("product add err", error));
 };
 
 export const deleteProduct = (id: string) => async (dispatch: Dispatch) => {
-  await api
+  await axios
     .delete(deleteProductRoute(id))
     .then(({ data }) => {
       dispatch({
@@ -62,7 +61,7 @@ export const deleteProduct = (id: string) => async (dispatch: Dispatch) => {
         payload: PRODUCT_DELETE_SUCCESS,
       });
     })
-    .catch((error) => console.log("product delete err", error));
+    .catch((error) => console.log("product add err", error));
 };
 
 export const reset = () => async (dispatch: Dispatch) => {
