@@ -25,11 +25,11 @@ const ImageCard = ({
         image={image}
         title={title}
       />
-      <CardContent sx={{ height: 100 }}>
-        <Typography gutterBottom variant="h5" component="div">
+      <CardContent sx={{ height: 80,background: "#ebebeb45",  }}>
+        <Typography gutterBottom sx={{textTransform: 'capitalize'}} variant="h6" noWrap component="div">
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" gutterBottom noWrap color="text.secondary">
           {description}
         </Typography>
         <Typography>Rs. {price}</Typography>
