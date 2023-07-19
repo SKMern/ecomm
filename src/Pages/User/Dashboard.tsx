@@ -19,9 +19,13 @@ import {
   deleteProduct,
   getAllProducts,
   reset,
+  setReduxLoader,
 } from "../../Redux/Actions/productActions";
 import { useNavigate } from "react-router";
-import { PRODUCT_DELETE_SUCCESS } from "../../Redux/ActionTypes";
+import {
+  ADD_PRODUCT_SUCCESS,
+  PRODUCT_DELETE_SUCCESS,
+} from "../../Redux/ActionTypes";
 import Loader from "../../Components/Loader";
 
 const tableHead = ["ID", "Title", "Category", "Action"];
@@ -30,6 +34,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector((state) => state.Products.addMessage);
+  const reduxLoader = useAppSelector((state) => state.Products.loader);
   const userDetails = useAppSelector((state) => state.Authentication);
   const Products = useAppSelector((state) =>
     state.Products.products.filter((it) => it.category === "bags")
@@ -37,23 +42,35 @@ const Dashboard = () => {
   const [popup, setPopup] = useState(false);
   const [loader, setLoader] = useState(true);
 
+  const resetStatus = () => dispatch(reset());
+  const getProducts = () => dispatch(getAllProducts());
+
   useEffect(() => {
     if (Products.length === 0) {
-      dispatch(getAllProducts());
+      getProducts();
     }
-    if (Products && Products.length > 0 && loader) {
-      setLoader(false);
+    if (reduxLoader !== loader ) {console.log('redux', reduxLoader)
+      setLoader(reduxLoader);
+    }
+
+    if(status && [ADD_PRODUCT_SUCCESS].includes(status)){console.log('releooad')
+      getProducts();
+      resetStatus();
     }
 
     if (status === PRODUCT_DELETE_SUCCESS) {
+      console.log("delelte");
       setPopup(true);
       setLoader(false);
+      resetStatus();
+      getProducts();
     }
   }, [status, Products]);
   const { userName } = userDetails;
-
+console.log('Loader', loader)
   const onDelete = (id: string) => {
     setLoader(true);
+    dispatch(setReduxLoader());
     dispatch(deleteProduct(id.toString()));
   };
   return (
@@ -116,7 +133,6 @@ const Dashboard = () => {
           <Button
             variant="outlined"
             onClick={() => {
-              dispatch(reset());
               setPopup(false);
             }}
           >

@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, CircularProgress } from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const Loader = () => {
   return (

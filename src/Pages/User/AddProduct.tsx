@@ -9,14 +9,12 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { AddProductState, ProductsData, RegisterInput } from "../../Types";
+import { AddProductState, RegisterInput } from "../../Types";
 import { useAppDispatch, useAppSelector } from "../../Components/Hooks";
 import { productSchema, validate } from "../../Components/Helper";
-import { errorDesign } from "../Login";
 import { useLocation, useNavigate } from "react-router";
 import {
   addProduct,
-  reset,
   updateProduct,
 } from "../../Redux/Actions/productActions";
 import { ADD_PRODUCT_SUCCESS } from "../../Redux/ActionTypes";
@@ -67,17 +65,17 @@ const AddProduct = () => {
   });
   const status = useAppSelector((state) => state.Products.addMessage);
   const allProduct = useAppSelector((state) => state.Products.products);
-  const id = (allProduct && allProduct.length > 0) ? allProduct[allProduct.length - 1].id + 1 : 0;
+  const id = (allProduct && allProduct.length > 0) ? allProduct[allProduct.length - 1].id + 2 : 0;
 
   useEffect(() => {
-    if(!editId){
-      setProduct(productSchema);
+    if(!editId && product.id ){console.log('adda')
+      setProduct({...productSchema, popup: false});
     }
     if (status) {
       setError({ ...error, loginStatus: status });
       setProduct({ ...product, loader: false });
     }
-    if (status === ADD_PRODUCT_SUCCESS) {
+    if (status === ADD_PRODUCT_SUCCESS) {console.log('first')
       setProduct({ ...product, popup: true, loader: false });
     }
     if (editId && !product.id) {
@@ -86,9 +84,6 @@ const AddProduct = () => {
     if(editId && !selectedProduct){
       navigate('/profile')
     }
-    return () => {
-      dispatch(reset())
-    };
   }, [status, editId]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -174,9 +169,6 @@ const AddProduct = () => {
             );
           })}
         </Grid>
-        {error.loginStatus && (
-          <span style={errorDesign}>{error.loginStatus}</span>
-        )}
         <Button
           fullWidth
           variant="contained"
@@ -189,13 +181,12 @@ const AddProduct = () => {
       </Box>
       <Dialog open={product.popup ? product.popup : false}>
         <DialogTitle>
-          Product added success, Click ok to Dashboard page
+          Product {editId ? 'Update' : "Add"} success, Click ok to Dashboard page
         </DialogTitle>
         <DialogActions sx={{ justifyContent: "center" }}>
           <Button
             variant="outlined"
             onClick={() => {
-              dispatch(reset());
               navigate(`/profile`);
             }}
           >

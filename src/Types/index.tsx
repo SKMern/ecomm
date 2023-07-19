@@ -63,9 +63,9 @@ export interface ProductsData {
 }
 
 export type ProductsState = {
-  status: boolean;
   products: ProductsData[];
   addMessage: string;
+  loader: boolean
 };
 
 export interface AddProductState extends ProductsData {

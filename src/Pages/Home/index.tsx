@@ -10,11 +10,12 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const products = useAppSelector((state) => state.Products.products);
-  const loader = useAppSelector((state) => state.Products.status);
+  const loader = useAppSelector((state) => state.Products.loader);
+
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
-  if (!loader) return <Loader />;
+  if (loader) return <Loader />;
   return (
     <Container maxWidth="xl">
       <h1 style={{ textAlign: "center" }}>All products</h1>

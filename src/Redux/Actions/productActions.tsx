@@ -6,6 +6,7 @@ import {
   GET_ALL_PRODUCTS,
   PRODUCT_DELETE_SUCCESS,
   RESET_STATE,
+  SET_LOADER,
   UPDATE_PRODUCT,
 } from "../ActionTypes";
 import {
@@ -38,7 +39,7 @@ export const addProduct = (data: any) => async (dispatch: Dispatch) => {
 };
 
 export const updateProduct = (data: any) => async (dispatch: Dispatch) => {
-  console.log("data",data)
+  console.log("data", data);
   await api
     .patch(updateProductRoute(data._id), data)
     .then(({ data }) => {
@@ -64,4 +65,8 @@ export const deleteProduct = (id: string) => async (dispatch: Dispatch) => {
 
 export const reset = () => async (dispatch: Dispatch) => {
   dispatch({ type: RESET_STATE });
+};
+
+export const setReduxLoader = () => async (dispatch: Dispatch) => {
+  dispatch({ type: SET_LOADER });
 };

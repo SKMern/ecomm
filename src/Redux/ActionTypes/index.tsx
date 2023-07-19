@@ -11,3 +11,5 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const ADD_PRODUCT_SUCCESS = "Product added successfully";
 export const PRODUCT_DELETE_SUCCESS = "Product deleted successfully";
 export const RESET_STATE = "RESET_STATE";
+export const SET_LOADER = "SET_LOADER";
+
