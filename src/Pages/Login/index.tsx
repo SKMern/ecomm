@@ -19,7 +19,7 @@ import { validate } from "../../Components/Helper";
 export const errorDesign = { color: "red", fontSize: "12px" };
 
 const Login = () => {
-  const dispactch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [user, setUser] = useState<LoginState>({
     userName: "",
     password: "",
@@ -70,14 +70,14 @@ const Login = () => {
   const handleSubmit = async () => {
     const { userName, password } = user;
     setUser({ ...user, loader: true });
-    dispactch(loginReset());
+    dispatch(loginReset());
     localStorage.clear();
     errorValidate();
     const data = { userName, password },
       errorData = { userError: error.userName, passwordError: error.password };
     if (validate(data, errorData)) {
       const { userName, password } = user;
-      const id = await dispactch(userLogin({ userName, password }));
+      const id = await dispatch(userLogin({ userName, password }));
       if (id) navigate(`/`);
     }
   };

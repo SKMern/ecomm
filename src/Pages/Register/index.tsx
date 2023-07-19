@@ -73,7 +73,7 @@ const restData = {
   secAnswer: "as",
 };
 const Register = () => {
-  const dispactch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState<RegisterState>({
     userName: "",
@@ -103,7 +103,7 @@ const Register = () => {
       setUser({ ...user, popup: true });
     }
     return () => {
-      dispactch(loginReset());
+      dispatch(loginReset());
     };
   }, [loginMessage]);
 
@@ -173,7 +173,7 @@ const Register = () => {
       };
     if (validate(data, errorData)) {
       delete data["confirmPassword"];
-      await dispactch(userRegister({ ...data, ...restData }));
+      await dispatch(userRegister({ ...data, ...restData }));
     }
   };
 

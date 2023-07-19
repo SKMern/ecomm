@@ -19,6 +19,9 @@ const Home = () => {
   useEffect(() => {
     dispatch(getAllProducts());
     window.addEventListener("scroll", handleScroll);
+    return () =>{
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, []);
 
   useEffect(() => {
@@ -60,7 +63,7 @@ const Home = () => {
       <Grid container spacing={4}>
         {list.map((it, i) => {
           return (
-            <Grid item sm={6} md={4} lg={2.4} key={i}>
+            <Grid item xs={12} sm={6} md={4} lg={2.4} key={i}>
               <div onClick={() => navigate(`product/${it.id}`)}>
                 <ImageCard {...it} />
               </div>
