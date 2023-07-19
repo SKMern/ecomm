@@ -90,7 +90,7 @@ console.log('Loader', loader)
             <TableHead>
               <TableRow>
                 {tableHead.map((it, i) => {
-                  return <TableCell key={i}>{it}</TableCell>;
+                  return <TableCell sx={{fontWeight: 'bold'}} key={i}>{it}</TableCell>;
                 })}
               </TableRow>
             </TableHead>
@@ -99,7 +99,7 @@ console.log('Loader', loader)
                 return (
                   <TableRow key={i}>
                     <TableCell>
-                      <p
+                      <span
                         style={{
                           textDecoration: "underline",
                           cursor: "pointer",
@@ -107,7 +107,7 @@ console.log('Loader', loader)
                         onClick={() => navigate(`/edit/${it.id}`)}
                       >
                         {it.id}
-                      </p>
+                      </span>
                     </TableCell>
                     <TableCell>{it.title}</TableCell>
                     <TableCell>{it.category}</TableCell>
