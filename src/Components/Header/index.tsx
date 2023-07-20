@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Container, Grid } from "@mui/material";
 import { userLogout } from "../../Redux/Actions/AuthActions";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Hooks";
 import { getLocalAccessToken } from "../../Api";
-import { getAllProducts } from "../../Redux/Actions/productActions";
 
 const Header = () => {
   let history = useNavigate();

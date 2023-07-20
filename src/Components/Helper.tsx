@@ -11,6 +11,7 @@ export const productSchema = {
   category: "",
   description: "",
   id: 0,
+  _id: "",
   image: "",
   price: 0,
   rating: { rate: 0, count: 0 },

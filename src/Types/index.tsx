@@ -56,6 +56,7 @@ export interface ProductsData {
   category: string;
   description: string;
   id: number;
+  _id: string
   image: string;
   price: number | string;
   rating: { rate: number; count: number };
@@ -73,4 +74,10 @@ export interface AddProductState extends ProductsData {
   loader?: boolean;
   loginStatus?: "";
   popup?: boolean;
+}
+
+export type TableProps = {
+  headers: string[]
+  data: ProductsData[]
+  onDelete: (id: string) => void
 }

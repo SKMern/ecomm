@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -27,6 +28,8 @@ import {
   PRODUCT_DELETE_SUCCESS,
 } from "../../Redux/ActionTypes";
 import Loader from "../../Components/Loader";
+import { ProductsData } from "../../Types";
+import ListTable from "../../Components/Table";
 
 const tableHead = ["ID", "Title", "Category", "Action"];
 
@@ -39,40 +42,58 @@ const Dashboard = () => {
   const Products = useAppSelector((state) =>
     state.Products.products.filter((it) => it.category === "bags")
   );
-  const [popup, setPopup] = useState(false);
-  const [loader, setLoader] = useState(true);
+  const [popup, setPopup] = useState<boolean>(false);
+  const [loader, setLoader] = useState<boolean>(true);
+  const [list, setList] = useState<ProductsData[]>([]);
+  const [limit, setLimit] = useState<number>(1);
 
   const resetStatus = () => dispatch(reset());
   const getProducts = () => dispatch(getAllProducts());
 
   useEffect(() => {
     if (Products.length === 0) {
+      // Get initial data
       getProducts();
     }
-    if (reduxLoader !== loader ) {console.log('redux', reduxLoader)
+    if (reduxLoader !== loader) {
+      // Set loader and initial table data
       setLoader(reduxLoader);
+      fetchData(limit);
     }
 
-    if(status && [ADD_PRODUCT_SUCCESS].includes(status)){console.log('releooad')
+    if (status && [ADD_PRODUCT_SUCCESS].includes(status)) {
+      //update list after add or update
       getProducts();
       resetStatus();
     }
 
     if (status === PRODUCT_DELETE_SUCCESS) {
-      console.log("delelte");
+      //set delete message success popup
       setPopup(true);
       setLoader(false);
       resetStatus();
       getProducts();
     }
   }, [status, Products]);
+
   const { userName } = userDetails;
-console.log('Loader', loader)
+
+  const fetchData = (page: number) => {
+    const filtered = Products.slice(page * 10 - 10, page * 10);
+    setList(filtered);
+    setLimit(page);
+  };
+
+  const pageSelect = (event: React.ChangeEvent<unknown>, value: number) => {
+    fetchData(value);
+  };
+
   const onDelete = (id: string) => {
     setLoader(true);
     dispatch(setReduxLoader());
     dispatch(deleteProduct(id.toString()));
   };
+
   return (
     <Container>
       <Typography variant="h4" sx={{ textAlign: "center", margin: "30px 0" }}>
@@ -80,53 +101,14 @@ console.log('Loader', loader)
       </Typography>
       {loader ? (
         <Loader />
-      ) : (
-        <TableContainer component={Paper}>
-          <Table
-            sx={{ minWidth: 650 }}
-            size="medium"
-            aria-label="a dense table"
-          >
-            <TableHead>
-              <TableRow>
-                {tableHead.map((it, i) => {
-                  return <TableCell sx={{fontWeight: 'bold'}} key={i}>{it}</TableCell>;
-                })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Products.map((it, i) => {
-                return (
-                  <TableRow key={i}>
-                    <TableCell>
-                      <span
-                        style={{
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => navigate(`/edit/${it.id}`)}
-                      >
-                        {it.id}
-                      </span>
-                    </TableCell>
-                    <TableCell>{it.title}</TableCell>
-                    <TableCell>{it.category}</TableCell>
-                    <TableCell>
-                      <Button
-                        sx={{ color: "red" }}
-                        onClick={() => onDelete(it._id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
-
+      ) : (<ListTable data={list} headers={tableHead} onDelete={onDelete} />)}
+      <Pagination
+        count={Math.ceil(Products.length / 10)}
+        sx={{
+          ".MuiPagination-ul": { justifyContent: "flex-end" },
+        }}
+        onChange={pageSelect}
+      />
       <Dialog open={popup}>
         <DialogTitle>Product Deleted success</DialogTitle>
         <DialogActions sx={{ justifyContent: "center" }}>
