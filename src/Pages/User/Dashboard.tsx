@@ -5,13 +5,6 @@ import {
   DialogActions,
   DialogTitle,
   Pagination,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -22,7 +15,6 @@ import {
   reset,
   setReduxLoader,
 } from "../../Redux/Actions/productActions";
-import { useNavigate } from "react-router";
 import {
   ADD_PRODUCT_SUCCESS,
   PRODUCT_DELETE_SUCCESS,
@@ -34,7 +26,6 @@ import ListTable from "../../Components/Table";
 const tableHead = ["ID", "Title", "Category", "Action"];
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector((state) => state.Products.addMessage);
   const reduxLoader = useAppSelector((state) => state.Products.loader);
@@ -46,6 +37,7 @@ const Dashboard = () => {
   const [loader, setLoader] = useState<boolean>(true);
   const [list, setList] = useState<ProductsData[]>([]);
   const [limit, setLimit] = useState<number>(1);
+  const [deleteId, setDeleteId] = useState<string>("");
 
   const resetStatus = () => dispatch(reset());
   const getProducts = () => dispatch(getAllProducts());
@@ -69,8 +61,8 @@ const Dashboard = () => {
 
     if (status === PRODUCT_DELETE_SUCCESS) {
       //set delete message success popup
-      setPopup(true);
       setLoader(false);
+      setDeleteId(PRODUCT_DELETE_SUCCESS);
       resetStatus();
       getProducts();
     }
@@ -88,11 +80,55 @@ const Dashboard = () => {
     fetchData(value);
   };
 
-  const onDelete = (id: string) => {
-    setLoader(true);
-    dispatch(setReduxLoader());
-    dispatch(deleteProduct(id.toString()));
+  const deletePopup = (id: string) => {
+    setPopup(true);
+    setDeleteId(id);
   };
+
+  const deleteConfirm = () => {
+    dispatch(setReduxLoader());
+    dispatch(deleteProduct(deleteId));
+  };
+
+  const closePopup = () => {
+    setPopup(false);
+    setTimeout(() => setDeleteId(""), 500);
+  };
+
+  const deleteSuccess = (
+    <>
+      <DialogTitle align="center">Product Deleted success</DialogTitle>
+      <DialogActions sx={{ justifyContent: "center", marginBottom: "20px" }}>
+        <Button variant="outlined" onClick={closePopup}>
+          Ok
+        </Button>
+      </DialogActions>
+    </>
+  );
+
+  const deleteContent = (
+    <>
+      <DialogTitle align="center">Are you sure to Delete ?</DialogTitle>
+      <DialogActions sx={{ justifyContent: "center", marginBottom: "20px" }}>
+        <Button
+          disabled={loader}
+          sx={{ textTransform: "none" }}
+          variant="text"
+          onClick={deleteConfirm}
+        >
+          Confirm
+        </Button>
+        <Button
+          variant="text"
+          sx={{ textTransform: "none" }}
+          color="error"
+          onClick={closePopup}
+        >
+          Cancel
+        </Button>
+      </DialogActions>
+    </>
+  );
 
   return (
     <Container>
@@ -101,7 +137,9 @@ const Dashboard = () => {
       </Typography>
       {loader ? (
         <Loader />
-      ) : (<ListTable data={list} headers={tableHead} onDelete={onDelete} />)}
+      ) : (
+        <ListTable data={list} headers={tableHead} onDelete={deletePopup} />
+      )}
       <Pagination
         count={Math.ceil(Products.length / 10)}
         sx={{
@@ -109,18 +147,8 @@ const Dashboard = () => {
         }}
         onChange={pageSelect}
       />
-      <Dialog open={popup}>
-        <DialogTitle>Product Deleted success</DialogTitle>
-        <DialogActions sx={{ justifyContent: "center" }}>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              setPopup(false);
-            }}
-          >
-            Ok
-          </Button>
-        </DialogActions>
+      <Dialog open={popup} sx={{ ".MuiPaper-root": { width: "450px" } }}>
+        {deleteId === PRODUCT_DELETE_SUCCESS ? deleteSuccess : deleteContent}
       </Dialog>
     </Container>
   );
