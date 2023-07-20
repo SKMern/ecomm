@@ -87,7 +87,7 @@ const Header = () => {
 
   return (
     <Container
-      maxWidth={false}
+      maxWidth='xl'
       sx={{
         height: 70,
         padding: "20px !important",
