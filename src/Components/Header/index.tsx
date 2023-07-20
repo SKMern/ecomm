@@ -14,7 +14,11 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Hooks";
 import { getLocalAccessToken } from "../../Api";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Close } from "@mui/icons-material";
+import { CancelSharp } from "@mui/icons-material";
+
+const leftAlign = (left: boolean) => {
+  return {justifyContent: left ? "flex-start !important" : "center"}
+}
 
 const Header = () => {
   let history = useNavigate();
@@ -54,18 +58,18 @@ const Header = () => {
           }}
         >
           {isIpad && (
-            <IconButton onClick={() => controlDraw(false)}>
+            <IconButton sx={leftAlign(isIpad)} onClick={() => controlDraw(false)}>
               {" "}
-              <Close />
+              <CancelSharp />
             </IconButton>
           )}
-          <Button onClick={() => routeTo(`/profile`)}>Dashboard</Button>
-          <Button onClick={() => routeTo("/add")}>Add Product</Button>
-          <Button onClick={logout}>Logout</Button>
+          <Button sx={leftAlign(isIpad)} onClick={() => routeTo(`/profile`)}>Dashboard</Button>
+          <Button sx={leftAlign(isIpad)} onClick={() => routeTo("/add")}>Add Product</Button>
+          <Button sx={leftAlign(isIpad)} onClick={logout}>Logout</Button>
         </Paper>
       ) : (
         <Button
-          sx={{ margin: isIpad ? "20px 10px" : "0" }}
+          sx={{ margin: isIpad ? "20px 10px" : "0", ...leftAlign(isIpad) }}
           variant="text"
           onClick={() => routeTo("/login")}
         >
