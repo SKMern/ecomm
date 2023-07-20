@@ -18,7 +18,7 @@ const ListTable = ({ headers, data, onDelete }: TableProps) => {
   return (
     <TableContainer component={Paper} sx={{ marginBottom: "20px" }}>
       <Table size="medium" aria-label="a dense table">
-        <TableHead sx={{background: "#c3b9b94a"}}>
+        <TableHead sx={{ background: "#c3b9b94a" }}>
           <TableRow>
             {headers.map((it: string, i: number) => {
               return (
@@ -48,7 +48,7 @@ const ListTable = ({ headers, data, onDelete }: TableProps) => {
                 <TableCell>{it.category}</TableCell>
                 <TableCell>
                   <span
-                    style={{ color: "red", cursor: 'pointer' }}
+                    style={{ color: "red", cursor: "pointer" }}
                     onClick={() => onDelete(it._id)}
                   >
                     Delete
