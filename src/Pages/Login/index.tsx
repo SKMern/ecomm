@@ -101,6 +101,7 @@ const Login = () => {
             md={12}
             sx={{
               marginBottom: "20px",
+              width: '100%'
             }}
           >
             <TextField
@@ -119,6 +120,7 @@ const Login = () => {
             md={12}
             sx={{
               marginBottom: "20px",
+              width: '100%'
             }}
           >
             <TextField

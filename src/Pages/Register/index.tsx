@@ -193,7 +193,7 @@ const Register = () => {
         <Grid container>
           {RegisterInputs.map((it, i) => {
             return (
-              <Grid item md={12} key={i}>
+              <Grid item sx={{width: '100%'}} md={12} key={i}>
                 <TextField
                   name={it.name}
                   type={it.name === "password" ? "password" : "text"}

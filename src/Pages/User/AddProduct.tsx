@@ -150,7 +150,7 @@ const AddProduct = () => {
         <Grid container>
           {productInputs.map((it, i) => {
             return (
-              <Grid item md={12} key={i}>
+              <Grid item sx={{width: '100%'}} key={i}>
                 <TextField
                   name={it.name}
                   value={product[it.name]}
