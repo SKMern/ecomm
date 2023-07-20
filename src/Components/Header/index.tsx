@@ -1,22 +1,86 @@
-import React from "react";
-import { Button, Container, Grid } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Button,
+  Container,
+  Drawer,
+  Grid,
+  IconButton,
+  Paper,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { userLogout } from "../../Redux/Actions/AuthActions";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Hooks";
 import { getLocalAccessToken } from "../../Api";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Close } from "@mui/icons-material";
 
 const Header = () => {
   let history = useNavigate();
   const dispatch = useAppDispatch();
   const isLoggedIn = getLocalAccessToken();
+  const theme = useTheme();
+  const isIpad = useMediaQuery(theme.breakpoints.down("md"));
+  const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const routeTo = (route: string) => {
     history(route);
+    controlDraw(false);
   };
+
   const logout = () => {
     dispatch(userLogout());
     history("/login");
+    controlDraw(false);
   };
+
+  
+
+  const controlDraw = (show: boolean) => setShowMenu(show);
+  const navMenus = (
+    <>
+      {isLoggedIn ? (
+        <Paper elevation={0}
+          sx={{
+            display: "flex",
+            flexDirection: isIpad ? "column" : "row",
+            padding: isIpad ? "20px" : "0",
+            justifyContent: "space-between",
+            ". MuiButtonBase-root" : {
+              justifyContent: isIpad ? 'flex-start' : "center",
+              color: 'red'
+            }
+          }}
+        >
+          {isIpad && (
+            <IconButton onClick={() => controlDraw(false)}>
+              {" "}
+              <Close />
+            </IconButton>
+          )}
+          <Button onClick={() => routeTo(`/profile`)}>Dashboard</Button>
+          <Button onClick={() => routeTo("/add")}>Add Product</Button>
+          <Button onClick={logout}>Logout</Button>
+        </Paper>
+      ) : (
+        <Button
+          sx={{ margin: isIpad ? "20px 10px" : "0" }}
+          variant="text"
+          onClick={() => routeTo("/login")}
+        >
+          Login / Register
+        </Button>
+      )}
+    </>
+  );
+
+  const MenuButton = (
+    <IconButton onClick={() => controlDraw(true)}>
+      <MenuIcon />
+    </IconButton>
+  );
+
   return (
     <Container
       maxWidth={false}
@@ -29,28 +93,22 @@ const Header = () => {
     >
       <Grid container justifyContent="space-between">
         <Grid item md={6}>
-          <Button sx={{color: '#000', textTransform: 'none'}} onClick={() => routeTo("/")}>
+          <Button
+            sx={{ color: "#000", textTransform: "none" }}
+            onClick={() => routeTo("/")}
+          >
             eComm
           </Button>
         </Grid>
         <Grid item md={6}>
           <Grid container justifyContent="flex-end">
-            {isLoggedIn ? (
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button onClick={() => routeTo(`/profile`)}>
-                  Dashboard
-                </Button>
-                <Button onClick={() => routeTo("/add")}>Add Product</Button>
-                <Button onClick={logout}>Logout</Button>
-              </div>
-            ) : (
-              <Button variant="text" onClick={() => routeTo("/login")}>
-                Login / Register
-              </Button>
-            )}
+            {isIpad ? MenuButton : navMenus}
           </Grid>
         </Grid>
       </Grid>
+      <Drawer open={showMenu} anchor="right" onClose={() => controlDraw(false)}>
+        {navMenus}
+      </Drawer>
     </Container>
   );
 };
