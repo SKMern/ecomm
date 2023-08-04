@@ -24,7 +24,7 @@ const Viewproduct = () => {
   }, [currentProduct]);
 
   if (loader) return <Loader />;
-  const { image, title, description, price, rating, category } = product;
+  const { image, title, description, price} = product;
   return (
     <Container maxWidth="xl" sx={{ marginTop: "20px" }}>
       <Grid container gap={4}>

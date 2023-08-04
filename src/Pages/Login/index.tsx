@@ -61,10 +61,11 @@ const Login = () => {
   };
 
   const errorValidate = () => {
-    error.userName = !user.userName ? "Username cannot be empty" : "";
-    error.password = !user.password ? "password cannot be empty" : "";
-    error.loginStatus = "";
-    setError(error);
+    let errors: any = {}
+    errors.userName = !user.userName ? "Username cannot be empty" : "";
+    errors.password = !user.password ? "password cannot be empty" : "";
+    errors.loginStatus = "";
+    setError({...error, ...errors});
   };
 
   const handleSubmit = async () => {
@@ -101,10 +102,11 @@ const Login = () => {
             md={12}
             sx={{
               marginBottom: "20px",
-              width: '100%'
+              width: "100%",
             }}
           >
             <TextField
+               inputProps={{ "data-testid": "username-input" }}
               name="userName"
               value={user.userName}
               error={error.userName ? true : false}
@@ -120,10 +122,11 @@ const Login = () => {
             md={12}
             sx={{
               marginBottom: "20px",
-              width: '100%'
+              width: "100%",
             }}
           >
             <TextField
+               inputProps={{ "data-testid": "password-input" }}
               name="password"
               type={user.showpassword ? "text" : "password"}
               value={user.password}

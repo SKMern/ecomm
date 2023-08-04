@@ -1,5 +1,4 @@
 import {
-  Button,
   Paper,
   Table,
   TableBody,
@@ -48,6 +47,7 @@ const ListTable = ({ headers, data, onDelete }: TableProps) => {
                 <TableCell>{it.category}</TableCell>
                 <TableCell>
                   <span
+                    data-testid={`delete_${it.id}`}
                     style={{ color: "red", cursor: "pointer" }}
                     onClick={() => onDelete(it._id)}
                   >

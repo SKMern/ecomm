@@ -128,35 +128,41 @@ const Register = () => {
 
   //valid password return true
   const isValidPassword = (email: string) => {
-    const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-    console.log('regex.test(pwd)', regex.test(email))
+    const regex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[\d])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    console.log("regex.test(pwd)", regex.test(email));
     return regex.test(email);
   };
-  
+
   const errorValidation = () => {
-    error.name = !user.name
+    let errors: any = {};
+    errors.name = !user.name
       ? "Name cannot be empty"
       : user.name.length < 3
       ? "Enter min 3 char"
       : "";
-    error.userName = !user.userName
+    errors.userName = !user.userName
       ? "Username cannot be empty"
       : user.userName.length < 3
       ? "Enter min 3 char"
       : "";
-    error.email = !user.email
+    errors.email = !user.email
       ? "Email cannot be empty"
       : !isValidEmail(user.email)
       ? "Enter valid email"
       : "";
-    error.password = !user.password ? "Password cannot be empty" : !isValidPassword(user.password) ? "Password must contain min 8 char include upper lower digits spl chars" : "";
-    error.confirmPassword = !user.confirmPassword
+    errors.password = !user.password
+      ? "Password cannot be empty"
+      : !isValidPassword(user.password)
+      ? "Password must contain min 8 char include upper lower digits spl chars"
+      : "";
+    errors.confirmPassword = !user.confirmPassword
       ? "Enter confirm password"
       : user.password !== user.confirmPassword
       ? "Password doesn't match"
       : "";
-    error.loginStatus = "";
-    setError(error);
+    errors.loginStatus = "";
+    setError({ ...error, ...errors });
   };
 
   const handleSubmit = async () => {
@@ -193,8 +199,9 @@ const Register = () => {
         <Grid container>
           {RegisterInputs.map((it, i) => {
             return (
-              <Grid item sx={{width: '100%'}} md={12} key={i}>
+              <Grid item sx={{ width: "100%" }} md={12} key={i}>
                 <TextField
+                  inputProps={{ "data-testid": it.name }}
                   name={it.name}
                   type={it.name === "password" ? "password" : "text"}
                   value={user[it.name]}
