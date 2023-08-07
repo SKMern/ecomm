@@ -129,38 +129,53 @@ const Register = () => {
   //valid password return true
   const isValidPassword = (email: string) => {
     const regex =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[\d])(?=.*?[#?!@$%^&*-]).{8,}$/;
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\d)(?=.*?[#?!@$%^&*-]).{8,}$/;
     console.log("regex.test(pwd)", regex.test(email));
     return regex.test(email);
   };
 
   const errorValidation = () => {
     let errors: any = {};
-    errors.name = !user.name
-      ? "Name cannot be empty"
-      : user.name.length < 3
-      ? "Enter min 3 char"
-      : "";
-    errors.userName = !user.userName
-      ? "Username cannot be empty"
-      : user.userName.length < 3
-      ? "Enter min 3 char"
-      : "";
-    errors.email = !user.email
-      ? "Email cannot be empty"
-      : !isValidEmail(user.email)
-      ? "Enter valid email"
-      : "";
-    errors.password = !user.password
-      ? "Password cannot be empty"
-      : !isValidPassword(user.password)
-      ? "Password must contain min 8 char include upper lower digits spl chars"
-      : "";
-    errors.confirmPassword = !user.confirmPassword
-      ? "Enter confirm password"
-      : user.password !== user.confirmPassword
-      ? "Password doesn't match"
-      : "";
+    if (!user.name) {
+      errors.name = "Name cannot be empty";
+    } else if (user.name.length < 3) {
+      errors.name = "Enter min 3 char";
+    } else {
+      errors.name = "";
+    }
+    
+    if (!user.userName) {
+      errors.userName = "Username cannot be empty";
+    } else if (user.userName.length < 3) {
+      errors.userName = "Enter min 3 char";
+    } else {
+      errors.userName = "";
+    }
+    
+    if (!user.email) {
+      errors.email = "Email cannot be empty";
+    } else if (!isValidEmail(user.email)) {
+      errors.email = "Enter valid email";
+    } else {
+      errors.email = "";
+    }
+    
+    if (!user.password) {
+      errors.password = "Password cannot be empty";
+    } else if (!isValidPassword(user.password)) {
+      errors.password = "Password must contain min 8 char include upper lower digits spl chars";
+    } else {
+      errors.password = "";
+    }
+    
+    if (!user.confirmPassword) {
+      errors.confirmPassword = "Enter confirm password";
+    } else if (user.password !== user.confirmPassword) {
+      errors.confirmPassword = "Password doesn't match";
+    } else {
+      errors.confirmPassword = "";
+    }
+    
     errors.loginStatus = "";
     setError({ ...error, ...errors });
   };

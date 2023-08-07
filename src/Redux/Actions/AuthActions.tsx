@@ -1,4 +1,3 @@
-// import api from "../../Api";
 import {
   RESET_STATE,
   USER_LOGIN,

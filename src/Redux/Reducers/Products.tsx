@@ -11,7 +11,7 @@ import {
 const initialState: ProductsState = {
   products: [],
   addMessage: "",
-  loader: true
+  loader: true,
 };
 
 const Products = (state: ProductsState = initialState, action: Action) => {
@@ -24,17 +24,7 @@ const Products = (state: ProductsState = initialState, action: Action) => {
         products: [...payload],
       };
     case ADD_PRODUCT:
-      return {
-        ...state,
-        loader: true,
-        addMessage: payload,
-      };
     case UPDATE_PRODUCT:
-      return {
-        ...state,
-        loader: true,
-        addMessage: payload,
-      };
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -46,10 +36,11 @@ const Products = (state: ProductsState = initialState, action: Action) => {
         ...state,
         addMessage: "",
       };
-    case SET_LOADER: 
-    return {
-      ...state, loader: true
-    }
+    case SET_LOADER:
+      return {
+        ...state,
+        loader: true,
+      };
     default:
       return state;
   }
