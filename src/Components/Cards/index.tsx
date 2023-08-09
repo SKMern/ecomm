@@ -10,7 +10,6 @@ const ImageCard = ({
   title,
   description,
   price,
-  rating,
 }: ProductsData) => {
   return (
     <Card

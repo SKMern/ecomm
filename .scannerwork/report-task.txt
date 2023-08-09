@@ -2,5 +2,5 @@ projectKey=ecommerce-app
 serverUrl=http://localhost:9000
 serverVersion=9.6.1.59531
 dashboardUrl=http://localhost:9000/dashboard?id=ecommerce-app
-ceTaskId=AYm_SRgbLoVy-izWiR3t
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYm_SRgbLoVy-izWiR3t
+ceTaskId=AYnZW1Kab8AmaWOJTKs0
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYnZW1Kab8AmaWOJTKs0

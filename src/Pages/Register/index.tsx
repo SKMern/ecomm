@@ -139,7 +139,7 @@ const Register = () => {
     if (!user.name) {
       errors.name = "Name cannot be empty";
     } else if (user.name.length < 3) {
-      errors.name = "Enter min 3 char";
+      errors.name = "Enter name min 3 char";
     } else {
       errors.name = "";
     }

@@ -39,8 +39,6 @@ const Header = () => {
     controlDraw(false);
   };
 
-  
-
   const controlDraw = (show: boolean) => setShowMenu(show);
   const navMenus = (
     <>

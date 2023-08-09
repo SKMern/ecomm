@@ -25,11 +25,13 @@ describe("Register Page", () => {
     const { getByText, getByTestId } = renderComponent();
 
     const userInput = getByTestId("userName");
+    const nameInput = getByTestId("name");
     const emailInput = getByTestId("email");
     const passwordInput = getByTestId("password");
     const confirmPasswordInput = getByTestId("confirmPassword");
 
     fireEvent.change(userInput, { target: { value: "te" } });
+    fireEvent.change(nameInput, { target: { value: "te" } });
     fireEvent.change(emailInput, { target: { value: "te" } });
     fireEvent.change(passwordInput, { target: { value: "te" } });
     fireEvent.change(confirmPasswordInput, { target: { value: "tet" } });
@@ -37,6 +39,7 @@ describe("Register Page", () => {
     act(() => fireEvent.click(getByText("Register")));
 
     expect(getByText(/Enter min 3 char/i)).toBeInTheDocument();
+    expect(getByText(/Enter name min 3 char/i)).toBeInTheDocument();
     expect(getByText(/Enter valid email/i)).toBeInTheDocument();
     expect(getByText(/Password must contain min 8 char/i)).toBeTruthy();
     expect(getByText(/Password doesn't match/i)).toBeTruthy();
